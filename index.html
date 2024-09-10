@@ -21,8 +21,12 @@
             console.log('Received message:', message);
         });
 
-        socket.on('users', (data) => {
-            console.log('Received users:', data);
+        socket.on('newUser', (data) => {
+            console.log('Received new user:', data);
+        });
+
+        socket.on('userDisconnected', (data) => {
+            console.log('Received user disconnected:', data);
         });
     </script>
     

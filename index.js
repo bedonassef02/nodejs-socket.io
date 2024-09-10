@@ -17,15 +17,14 @@ io.on('connection', (socket) => {
     console.log('A user connected');
 
     users++;
+    io.emit('newUser', { message: 'New user connected' });
 
-    io.emit('users', { message: 'Users connected: ' + users });
 
     socket.on('disconnect', () => {
         console.log('User disconnected');
 
         users--;
-
-        io.emit('users', { message: 'Users connected: ' + users });
+        io.sockets.emit('userDisconnected', { message: 'User disconnected' });
     });
 });
 
