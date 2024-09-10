@@ -11,23 +11,13 @@
     <h1>Socket.io</h1>
 
     <script>   
-        const socket = io();
+        const socket = io('/custom-namespace');
 
-        socket.on('connect', () => {
-            console.log('Connected to the server');
+        socket.on('testEvent', (data) => {
+            console.log(data);
+            document.body.innerHTML += `<p>${data}</p>`;
         });
-
-        socket.on('message', (message) => {
-            console.log('Received message:', message);
-        });
-
-        socket.on('newUser', (data) => {
-            console.log('Received new user:', data);
-        });
-
-        socket.on('userDisconnected', (data) => {
-            console.log('Received user disconnected:', data);
-        });
+        
     </script>
     
 </body>

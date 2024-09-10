@@ -11,20 +11,15 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
-let users = 0;
+csnp = io.of('/custom-namespace');
 
-io.on('connection', (socket) => {
+csnp.on('connection', (socket) => {
     console.log('A user connected');
 
-    users++;
-    io.emit('newUser', { message: 'New user connected' });
-
+    csnp.emit('testEvent', 'Hello from custom namespace');
 
     socket.on('disconnect', () => {
         console.log('User disconnected');
-
-        users--;
-        io.sockets.emit('userDisconnected', { message: 'User disconnected' });
     });
 });
 
