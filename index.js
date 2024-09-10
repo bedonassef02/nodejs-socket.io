@@ -1,22 +1,27 @@
 const app = require('express')();
 const http = require('http').Server(app);
-
-const path = require('path');
-
 const io = require('socket.io')(http);
-
-
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
-csnp = io.of('/custom-namespace');
+let room = 1;
+let full = 0;
 
-csnp.on('connection', (socket) => {
+io.on('connection', (socket) => {
     console.log('A user connected');
 
-    csnp.emit('testEvent', 'Hello from custom namespace');
+    socket.join('room-' + room);
+
+    io.sockets.in('room-' + room).emit('connectedRoom', 'you are connected to room ' + room);
+
+    full++;
+
+    if(full == 2){
+        room++;
+        full = 0;
+    }
 
     socket.on('disconnect', () => {
         console.log('User disconnected');

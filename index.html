@@ -11,10 +11,10 @@
     <h1>Socket.io</h1>
 
     <script>   
-        const socket = io('/custom-namespace');
+        const socket = io();
 
-        socket.on('testEvent', (data) => {
-            console.log(data);
+        
+        socket.on('connectedRoom', (data) => {
             document.body.innerHTML += `<p>${data}</p>`;
         });
         
