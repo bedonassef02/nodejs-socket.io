@@ -11,17 +11,21 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
+let users = 0;
+
 io.on('connection', (socket) => {
     console.log('A user connected');
 
-    setTimeout(() => {
-        socket.send('Hello from server');
-        socket.emit('customEvent', { msg: 'Hello from server' });
-    }, 3000);
+    users++;
 
+    io.emit('users', { message: 'Users connected: ' + users });
 
     socket.on('disconnect', () => {
         console.log('User disconnected');
+
+        users--;
+
+        io.emit('users', { message: 'Users connected: ' + users });
     });
 });
 
